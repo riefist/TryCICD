@@ -28,7 +28,17 @@ before_script:
   - android-wait-for-emulator
   - adb shell input keyevent 82 &
 
-script: ./gradlew connectedAndroidTest
+script:
+  # Run Unit Test
+  - ./gradlew testDebugUnitTest
+  # Run Instrument Test
+  - ./gradlew connectedAndroidTest
+  # Generating APK
+  - ./gradlew assembleDebug
+  # JaCoCo
+  - ./gradlew jacocoTestReport
+  # Clean JaCoCo
+  - ./gradlew clean jacocoTestCoverageVerification
 
 after_success:
   - bash echo "Yata!"
